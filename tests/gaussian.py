@@ -4,12 +4,12 @@ def a(k,l,kc):
     p=k**l*np.exp(-k/k)
     p[0][0]=0
     return p
-def gaussian_rand_field(N:int,l,kc):
+def gaussian_rand_field(N:int,l,kc,p):
     dk=np.linspace(-N//2,N//2-1,N)
     kx,ky=np.meshgrid(dk,dk)
     kmag=np.sqrt(kx**2+ky**2)
     kmag=np.fft.ifftshift(kmag)
-    fnoise=np.random.normal(0,a(kmag,l,kc),(N,N))+1j*np.random.normal(0,a(kmag,l,kc),(N,N))
+    fnoise=np.random.normal(0,p(kmag,l,kc),(N,N))+1j*np.random.normal(0,p(kmag,l,kc),(N,N))
     fnoise[:0:-1,:-N//2:-1]=np.conjugate(fnoise[1:,1:N//2])
     fnoise[0,:-N//2:-1]=np.conjugate(fnoise[0,1:N//2])
     fnoise[:-N//2:-1,0]=np.conjugate(fnoise[1:N//2,0])
