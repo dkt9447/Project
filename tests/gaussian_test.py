@@ -3,12 +3,18 @@ import sys
 import gaussian as g
 import numpy as np
 def a(k,l,kc):
-    p=k**l*np.exp(-k/kc)
+    p=k**l*np.exp(-k**2/kc**2)
     p[0][0]=0
     return p
-for alpha in [-4.0, -3.0, -2.0]:
-    for beta in [.01,.1,1,10]:
+fig,axs=plt.subplots(3,3)
+for i in range(0,3):
+    for j in range(0,3):
+        alpha=-2*(i+1)
+        beta=10**(j)
         out = g.gaussian_rand_field(256,alpha,beta,a )
-        label="a="+str(alpha)+" kc="+str(beta)
-        plt.figure(label=label)
-        plt.imshow(out.real,label=str(alpha), interpolation='none',cmap='jet')
+        axs[i,j].imshow(out.real, interpolation='none',cmap='jet')
+        label="l="+str(alpha)+" kc="+str(beta)
+        axs[i,j].set_title(label)
+        axs[i,j].axis('off')
+
+fig.tight_layout()
