@@ -10,6 +10,7 @@ def gaussian_rand_field(N:int,l,kc,p):
     kmag=np.sqrt(kx**2+ky**2)
     kmag=np.fft.ifftshift(kmag)
     fnoise=np.random.normal(0,p(kmag,l,kc),(N,N))+1j*np.random.normal(0,p(kmag,l,kc),(N,N))
+    #symmeterizing the field
     fnoise[:0:-1,:-N//2:-1]=np.conjugate(fnoise[1:,1:N//2])
     fnoise[0,:-N//2:-1]=np.conjugate(fnoise[0,1:N//2])
     fnoise[:-N//2:-1,0]=np.conjugate(fnoise[1:N//2,0])
