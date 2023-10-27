@@ -18,3 +18,6 @@ for i in range(0,3):
         axs[i,j].axis('off')
 
 fig.tight_layout()
+
+
+
