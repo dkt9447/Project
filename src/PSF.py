@@ -62,19 +62,18 @@ class PSF:
             Defraction pattern given wavlength l
 
         '''
-        
         x,y=self.x,self.y
         x=x*l
         y=y*l
-        p=np.zeros(x.shape)
-        p[self.A(x,y,*self.args)]=1
-        pf=fftpack.fft2(p)
+        self.p=np.zeros(x.shape)
+        self.p[self.A(x,y,*self.args)]=1
+        pf=fftpack.fft2(self.p)
         pf=fftpack.fftshift(pf)
         return np.abs(pf)
     def add_noise(self,P:callable,*args):
         '''
         
-
+multiply
         Parameters
         ----------
         P : callable
@@ -88,8 +87,10 @@ class PSF:
 
         '''
         field=gauss.gaussian_rand_field(self.size,P,*args)
-        self.p+=np.real(field)
-        self.pf=fftpack.fftshift(fftpack.fft2(self.p))
+        field=np.exp(1j*2*np.pi*field)
+        p=self.p
+        p=p*np.real(field)
+        return np.abs(fftpack.fftshift(fftpack.fft2(p))),np.real(p)
 
     def color_psf(self,l=1):
         if l <380/750:
@@ -107,10 +108,10 @@ class PSF:
 
         '''
         RGB=colour.XYZ_to_RGB(colour.wavelength_to_XYZ(l*750),"sRGB")
-        self.PSF_diffraction(l)
-        R=RGB[0]*self.pf
-        G=RGB[1]*self.pf
-        B=RGB[2]*self.pf
+        pf=self.PSF_diffraction(l)
+        R=RGB[0]*pf
+        G=RGB[1]*pf
+        B=RGB[2]*pf
         return normalize(np.stack([R,G,B],axis=-1))
 
     def PSFshow(self,**kwargs):
@@ -173,5 +174,3 @@ def ___two_slits___(x,y,a,d):
     return np.logical_or((x-d/2)**2<a**2,(x+d/2)**2<a**2)
 def ___one_slit___(x,y,a):
     return x**2<a**2
-test=two_slits(2**4,.01,.1)
-# plt.imshow(test.color_psf(80/750))

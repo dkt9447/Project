@@ -8,8 +8,8 @@ import PSF
 
 Ncolors=100
 colors=0
-Nsize=8
-s=PSF.square(2**Nsize,.1)
+Nsize=7
+s=PSF.one_slit(2**Nsize,.1)
 for i in np.linspace(380/750, 1,Ncolors):
     colors+=s.color_psf(i)
 
