@@ -82,6 +82,7 @@ multiply
             DESCRIPTION.
 
         modifies apature shape with gaussian noise
+        returns tuple of PSF and modulated Apature
         -------
     
 
@@ -89,7 +90,8 @@ multiply
         field=gauss.gaussian_rand_field(self.size,P,*args)
         field=np.exp(1j*2*np.pi*field)
         p=self.p
-        p=p*np.real(field)
+        p=p*field
+        self.p=p
         return np.abs(fftpack.fftshift(fftpack.fft2(p))),np.real(p)
 
     def color_psf(self,l=1):
