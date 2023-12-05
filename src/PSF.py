@@ -165,6 +165,21 @@ class PSF:
         # colors/=np.ptp(colors)
         return normalize(colors)
     def labels(self,t):
+        '''
+        
+
+        Parameters
+        ----------
+        t : int
+            number of ticks.
+
+        Returns
+        -------
+        units : labels in micrometers.
+        ticks : array indecies for units
+            DESCRIPTION.
+
+        '''
         N=self.size
         ticks=np.linspace(0,N,t)
         units=(ticks-N/2)*2*np.pi*750/10**6
