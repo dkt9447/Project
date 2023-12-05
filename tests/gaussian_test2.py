@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import gaussian
 from matplotlib.animation import FuncAnimation
 def Cut_off(k,l):
-    return np.abs(k*(1-np.exp(-(k/4l)**2)))
+    return np.abs(k*(1-np.exp(-(k/4*l)**2)))
 def non_con_cut_off(k,l):
     np.where(np.abs(k)<l,0,k**2)
 def Large_K(k,l):
@@ -20,7 +20,7 @@ import PSF
 gauss_test=PSF.square(2**8,.1)
 
 plt.imshow(gauss_test.add_noise(Cut_off,10)[0])
-
+S=PSF.circle(2**8)
 units,ticks=S.labels(5)
 plt.xticks(ticks,units)
 plt.yticks(np.flip(ticks),units)
