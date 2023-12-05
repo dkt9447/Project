@@ -44,9 +44,13 @@ def J1_plot(a,b,N):
     residual = y_qua - y_sci
     fig,axs = plt.subplots(3)
     for ax in axs:
-        ax.axvline(x=0,label="x=0",color = 'k')
-        ax.axhline(y=0,label="y=0",color = 'k')
+        ax.axvline(x=0,color = 'k')
+        ax.axhline(y=0,color = 'k')
+        ax.set_xlabel("x")
+        ax.set_ylabel("y")
     axs[0].plot(x_qua,y_qua)
+    #axs[0].xlabel("x")
+    #axs[0].ylabel("y")
     axs[0].title.set_text("J1 from simpson's rule")
     axs[1].plot(x_sci,y_sci)
     axs[1].title.set_text("J1 from scipy")
