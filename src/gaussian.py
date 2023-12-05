@@ -1,9 +1,9 @@
+
+"Prep work 3"
 import numpy as np
 import matplotlib.pyplot as plt
 def a(k,l,kc):
-    p=k**l*np.exp(-k/k)
-    p[0][0]=0
-    return p
+    return np.where(k<=.10,0,k**l)
 def gaussian_rand_field(N:int,p,*args):
     """
     

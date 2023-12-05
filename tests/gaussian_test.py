@@ -1,5 +1,8 @@
+
+"For Prep Work 4"
+
+
 import matplotlib.pyplot as plt
-import sys
 import gaussian as g
 import numpy as np
 def a(k,l,kc):
@@ -11,13 +14,13 @@ for i in range(0,3):
     for j in range(0,3):
         alpha=-2*(i+1)
         beta=10**(j)
-        out = g.gaussian_rand_field(256,alpha,beta,a )
+        out = g.gaussian_rand_field(256,a,alpha,beta )
         axs[i,j].imshow(out.real, interpolation='none',cmap='jet')
         label="l="+str(alpha)+" kc="+str(beta)
         axs[i,j].set_title(label)
         axs[i,j].axis('off')
 
-fig.tight_layout()
 
-
+fig.tight_layout(pad=1.0)
+fig.savefig("bin")
 

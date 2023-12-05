@@ -32,12 +32,7 @@ class PSF:
     pf: array
         fft of p or pft
     """
-    p=0
-    pf=0
-    size=0
-    args=0
-    pf_color=0
-    x,y=0,0
+
     
     def __init__(self,size:int,A:callable,*args): 
         self.size=size
@@ -73,7 +68,7 @@ class PSF:
     def add_noise(self,P:callable,*args):
         '''
         
-multiply
+        multiply
         Parameters
         ----------
         P : callable
@@ -82,7 +77,7 @@ multiply
             DESCRIPTION.
 
         modifies apature shape with gaussian noise
-        returns tuple of PSF and modulated Apature
+        returns PSF and modulated Apature
         -------
     
 
@@ -110,11 +105,16 @@ multiply
 
         '''
         RGB=colour.XYZ_to_RGB(colour.wavelength_to_XYZ(l*750),"sRGB")
-        pf=self.PSF_diffraction(l)
+        pf=np.abs(self.PSF_diffraction(l))
+        pf=normalize(pf)
         R=RGB[0]*pf
         G=RGB[1]*pf
         B=RGB[2]*pf
-        return normalize(np.stack([R,G,B],axis=-1))
+        "gamma correction???"
+        # R=np.power(np.abs(R),.42)
+        # G=np.power(np.abs(G),.42)
+        # B=np.power(np.abs(B),.42)
+        return np.clip(10*(np.stack([R,G,B],axis=-1)),0,1)
 
     def PSFshow(self,**kwargs):
         '''
@@ -144,6 +144,32 @@ multiply
 
         '''
         plt.imshow(np.abs(self.p),**kwargs)
+    def white_light(self,Ncolors):
+        '''
+        
+
+        Parameters
+        ----------
+        Ncolors : int
+            number of colors.
+
+        Returns
+        -------
+        colorsA : size by size by 3 rgb image array .
+
+        '''
+        colors=0
+        for i in np.linspace(380/750, 1,Ncolors):
+            colors+=self.color_psf(i)
+        # colors=colors-np.mean(colors)
+        # colors/=np.ptp(colors)
+        return normalize(colors)
+    def labels(self,t):
+        N=self.size
+        ticks=np.linspace(0,N,t)
+        units=(ticks-N/2)*2*np.pi*750/10**6
+        units=np.round(units,2)
+        return units,ticks
 class circle(PSF):   
     def __init__(self, size, radius=.1):
         PSF.__init__(self, size, ___circ___, radius)
@@ -156,6 +182,15 @@ class two_slits(PSF):
 class one_slit(PSF):
     def __init__(self, size, width=.1):
         PSF.__init__(self, size, ___one_slit___, width)
+
+
+class polygon(PSF):
+    def __init__(self,size,c=.1,sides=3):
+        PSF.__init__(self,size,___polygon___,c,sides)
+
+
+
+
 def f(x,y,r,r2):
     return np.logical_and(x**2+y**2<r**2,x**2+y**2>r2**2)
 
@@ -170,8 +205,10 @@ def ___circ___(x,y,r):
 def ___squa___(x,y,r):
     return np.logical_and(np.abs(x)<r,np.abs(y)<r)
 
-
-    
+def ___polygon___(x,y,c,n):
+    theta=np.arctan2(x,y)
+    r=np.sqrt(x**2+y**2)
+    return r<=c/np.cos(theta-2*np.pi/n*np.floor((n*theta+np.pi)/(2*np.pi)))
 def ___two_slits___(x,y,a,d):
     return np.logical_or((x-d/2)**2<a**2,(x+d/2)**2<a**2)
 def ___one_slit___(x,y,a):

@@ -33,8 +33,8 @@ def PFT(x,y,r,r2,num):
 fig, ax = plt.subplots(2)
 plot = ax[0].imshow(PFT(x,y,r0,r2_0,number0))
 plot2= ax[1].imshow(P(x,y,r0,r2_0,number0))
-fig.set_figheight(25)
-fig.set_figwidth(25)
+fig.set_figheight(15)
+fig.set_figwidth(15)
 # adjust the main plot to make room for the sliders
 fig.subplots_adjust(left=0.25, bottom=0.25)
 
