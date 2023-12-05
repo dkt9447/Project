@@ -20,9 +20,21 @@ import PSF
 gauss_test=PSF.square(2**8,.1)
 
 plt.imshow(gauss_test.add_noise(Cut_off,10)[0])
-plt.show(2)
+
+units,ticks=S.labels(5)
+plt.xticks(ticks,units)
+plt.yticks(np.flip(ticks),units)
+plt.xlabel("micrometers")
+
+plt.show()
 plt.imshow(gauss_test.add_noise(Large_K,10)[0])
 
+
+units,ticks=S.labels(5)
+plt.xticks(ticks,units)
+plt.yticks(np.flip(ticks),units)
+plt.xlabel("micrometers")
+plt.show()
 fig=plt.figure()
 ax=plt.axes()
 plot=ax.imshow(gauss_test.PSF_diffraction())
