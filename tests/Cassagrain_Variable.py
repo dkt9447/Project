@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider,Button, RadioButtons
-
+import PSF
 
 N=2**8
 r0=.2
@@ -26,13 +26,30 @@ def PFT(x,y,r,r2,num):
     pf=np.fft.fftshift(pf)
     return (np.abs(pf))
 
-
+con=PSF.circle(N)
 
 
 
 fig, ax = plt.subplots(2)
 plot = ax[0].imshow(PFT(x,y,r0,r2_0,number0))
+units,ticks=con.labels(5)
+plt.sca(ax[0])
+plt.xticks(ticks,units)
+plt.yticks(np.flip(ticks),units)
+plt.xlabel("micrometers")
+
+
+
 plot2= ax[1].imshow(P(x,y,r0,r2_0,number0))
+plt.sca(ax[1])
+ticks=np.linspace(0,N,3)
+units=(ticks-N/2)/256
+units=np.round(units,2)
+plt.xticks(ticks,units)
+plt.yticks(np.flip(ticks),units)
+plt.xlabel("meters")
+
+
 fig.set_figheight(15)
 fig.set_figwidth(15)
 # adjust the main plot to make room for the sliders

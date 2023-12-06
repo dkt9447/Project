@@ -24,6 +24,10 @@ c=np.array([PSF.circle(N,.1),PSF.square(N,.1),PSF.one_slit(N,.1),PSF.two_slits(N
 
 fig, ax = plt.subplots()
 plot = ax.imshow(clip(c[i].color_psf(1)))
+units,ticks=c[0].labels(5)
+plt.xticks(ticks,units)
+plt.yticks(np.flip(ticks),units)
+plt.xlabel("micrometers")
 
 # adjust the main plot to make room for the sliders
 fig.subplots_adjust(left=0.25, bottom=0.25)

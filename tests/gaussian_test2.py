@@ -38,6 +38,9 @@ plt.show()
 fig=plt.figure()
 ax=plt.axes()
 plot=ax.imshow(gauss_test.PSF_diffraction())
+plt.xticks(ticks,units)
+plt.yticks(np.flip(ticks),units)
+plt.xlabel("micrometers")
 def init():
     plot.set_data(gauss_test.PSF_diffraction())
     return [plot]
