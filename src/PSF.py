@@ -164,7 +164,7 @@ class PSF:
         # colors=colors-np.mean(colors)
         # colors/=np.ptp(colors)
         return normalize(colors)
-    def labels(self,t):
+    def labels(self,t,angle=False):
         '''
         
 
@@ -184,6 +184,8 @@ class PSF:
         ticks=np.linspace(0,N,t)
         units=(ticks-N/2)*2*np.pi*750/10**6
         units=np.round(units,2)
+        if angle:
+            units*=10**6
         return units,ticks
 class circle(PSF):   
     def __init__(self, size, radius=.1):

@@ -20,9 +20,9 @@ s=PSF.PSF(2**8, polygon, .2 ,6)
 repeat=PSF.PSF(2**8,repeated,.01)
 b=PSF.PSF(2**8,beads,.05)
 
-plt.imshow(s.PSF_diffraction())
+plt.imshow(b.PSF_diffraction(2))
 
-units,ticks=s.labels(5)
+units,ticks=s.labels(11)
 plt.xticks(ticks,units)
 plt.yticks(np.flip(ticks),units)
 plt.xlabel("micrometers")

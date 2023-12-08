@@ -50,10 +50,10 @@ def update(val):
 col_slider.on_changed(update)
 
 resetax = fig.add_axes([0.8, 0.025, 0.1, 0.04])
-circax=fig.add_axes([.3,.125,.1,.04])
-squareax=fig.add_axes([.4,.125,.1,.04])
-slitax=fig.add_axes([.5,.125,.1,.04])
-slitsax=fig.add_axes([.6,.125,.1,.04])
+circax=fig.add_axes([.3,.10,.1,.04])
+squareax=fig.add_axes([.4,.10,.1,.04])
+slitax=fig.add_axes([.5,.10,.1,.04])
+slitsax=fig.add_axes([.6,.10,.1,.04])
 
 circleButton= Button(circax,"Circle",hovercolor='0.975')
 squareButton=Button(squareax,"Square",hovercolor='0.975')
