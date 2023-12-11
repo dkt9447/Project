@@ -32,14 +32,16 @@ class PSF:
     pf: array
         fft of p or pft
     """
-
+    
     
     def __init__(self,size:int,A:callable,*args): 
+        
         self.size=size
         self.args=args
         self.A=A
         dk=np.linspace(-1,1,self.size)
         self.x,self.y=np.meshgrid(dk,dk)
+        self.field=np.ones(self.x.shape)
         self.pf=self.PSF_diffraction(l=1)
     def PSF_diffraction(self,l=1):
         '''
@@ -62,9 +64,13 @@ class PSF:
         y=y*l
         self.p=np.zeros(x.shape)
         self.p[self.A(x,y,*self.args)]=1
+        self.p=self.p*self.field**(1/l)
         pf=fftpack.fft2(self.p)
         pf=fftpack.fftshift(pf)
         return np.abs(pf)
+    def remove_noise(self):
+        self.field=np.ones(self.x.shape)
+        self.PSF_diffraction()
     def add_noise(self,P:callable,*args):
         '''
         
@@ -83,10 +89,12 @@ class PSF:
 
         '''
         field=gauss.gaussian_rand_field(self.size,P,*args)
-        field=np.exp(1j*2*np.pi*field)
+        if (self.field.all()==1):
+            self.field=np.exp(1j*2*np.pi*field)
+        else:
+            self.field*=np.exp(1j*2*np.pi*field)
+        self.p=self.p*self.field
         p=self.p
-        p=p*field
-        self.p=p
         return np.abs(fftpack.fftshift(fftpack.fft2(p))),np.real(p)
 
     def color_psf(self,l=1):
@@ -114,7 +122,7 @@ class PSF:
         # R=np.power(np.abs(R),.42)
         # G=np.power(np.abs(G),.42)
         # B=np.power(np.abs(B),.42)
-        return np.clip(10*(np.stack([R,G,B],axis=-1)),0,1)
+        return 10*(np.stack([R,G,B],axis=-1))
 
     def PSFshow(self,**kwargs):
         '''

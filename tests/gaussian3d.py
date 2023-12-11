@@ -45,4 +45,4 @@ def animate(i):
     return [plot]
 anim = FuncAnimation(fig, animate, init_func=init,frames=2**8+1,interval=1,blit=True)
 
-anim.save('3dnoise.gif',dpi=300)
+anim.save('bin/3dnoise.gif',dpi=300)

@@ -22,7 +22,7 @@ b=PSF.PSF(2**8,beads,.05)
 
 plt.imshow(b.PSF_diffraction(2))
 
-units,ticks=s.labels(11)
+units,ticks=s.labels(5)
 plt.xticks(ticks,units)
 plt.yticks(np.flip(ticks),units)
 plt.xlabel("micrometers")

@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['tests\\gaussian_test.py', 'tests\\gaussian_test2.py', 'tests\\colors.py', 'tests\\color_var.py', 'src\\PSF.py', 'tests\\gaussian3d.py', 'tests\\Cassagrain_Variable.py', 'tests\\fun with diffraction.py', '..\\..\\..\\..\\..\\Program Files\\Spyder\\pkgs\\jedi\\third_party\\typeshed\\stdlib\\3\\builtins.pyi', 'tests\\gaussian.py', 'tests\\J1.py']
+recent_files = ['tests\\gaussian_test.py', 'tests\\gaussian_test2.py', 'tests\\colors.py', 'tests\\color_var.py', 'src\\PSF.py', 'tests\\gaussian3d.py', 'tests\\Cassagrain_Variable.py', 'tests\\fun with diffraction.py', 'tests\\gaussian.py', 'tests\\J1.py', 'analytical.py']
 
 [main]
 version = 0.2.0

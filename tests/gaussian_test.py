@@ -22,5 +22,5 @@ for i in range(0,3):
 
 
 fig.tight_layout(pad=1.0)
-fig.savefig("bin")
+fig.savefig("bin/Gaussian Test")
 

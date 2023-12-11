@@ -23,7 +23,7 @@ Nsize=8
 S=PSF.PSF(2**Nsize,in_out_struts,0,.2,6)
 
 
-plt.imshow(S.white_light(9))
+plt.imshow(S.white_light(8))
 units,ticks=S.labels(5)
 plt.xticks(ticks,units)
 plt.yticks(np.flip(ticks),units)
